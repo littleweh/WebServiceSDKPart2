@@ -12,9 +12,9 @@
 @class WebServiceSDKPart2;
 
 @protocol WebServiceSDKPart2Delegate <NSObject>
--(void) WebSerdidGetJSONObject: (NSDictionary *) rootObject;
+-(void) WebServiceSDKPart2: (WebServiceSDKPart2*) httpBinSDK didGetJSONObject: (NSDictionary *) rootObject;
 -(void) WebServiceSDKPart2: (WebServiceSDKPart2*) httpBinSDK didGetImage: (UIImage *) image;
--(void) WebServiceSDKPart2: (WebServiceSDKPart2 *)httpBinSDK didGetImage:(UIImage *)image
+-(void) WebServiceSDKPart2: (WebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error;
 
 @end
 
