@@ -7,7 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@class WebServiceSDKPart2;
+
+@protocol WebServiceSDKPart2Delegate <NSObject>
+-(void) WebSerdidGetJSONObject: (NSDictionary *) rootObject;
+-(void) WebServiceSDKPart2: (WebServiceSDKPart2*) httpBinSDK didGetImage: (UIImage *) image;
+-(void) WebServiceSDKPart2: (WebServiceSDKPart2 *)httpBinSDK didGetImage:(UIImage *)image
+
+@end
 
 @interface WebServiceSDKPart2 : NSObject
+@property (weak, nonatomic, readwrite) id <WebServiceSDKPart2Delegate> delegate;
 
+-(void)fetchGetResponse;
+-(void)postCustomerName:(NSString *)name;
+-(void)fetchImage;
 @end

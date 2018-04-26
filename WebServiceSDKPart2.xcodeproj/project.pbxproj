@@ -14,6 +14,7 @@
 		792FD4452091D17A00DC1462 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 792FD4432091D17A00DC1462 /* LaunchScreen.storyboard */; };
 		792FD4482091D17A00DC1462 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 792FD4472091D17A00DC1462 /* main.m */; };
 		792FD4522091D17A00DC1462 /* WebServiceSDKPart2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 792FD4512091D17A00DC1462 /* WebServiceSDKPart2Tests.m */; };
+		792FD45E2091D19B00DC1462 /* WebServiceSDKPart2.m in Sources */ = {isa = PBXBuildFile; fileRef = 792FD45D2091D19B00DC1462 /* WebServiceSDKPart2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		792FD44D2091D17A00DC1462 /* WebServiceSDKPart2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebServiceSDKPart2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		792FD4512091D17A00DC1462 /* WebServiceSDKPart2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebServiceSDKPart2Tests.m; sourceTree = "<group>"; };
 		792FD4532091D17A00DC1462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		792FD45C2091D19A00DC1462 /* WebServiceSDKPart2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebServiceSDKPart2.h; sourceTree = "<group>"; };
+		792FD45D2091D19B00DC1462 /* WebServiceSDKPart2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebServiceSDKPart2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				792FD4392091D17A00DC1462 /* AppDelegate.m */,
 				792FD43B2091D17A00DC1462 /* ViewController.h */,
 				792FD43C2091D17A00DC1462 /* ViewController.m */,
+				792FD45C2091D19A00DC1462 /* WebServiceSDKPart2.h */,
+				792FD45D2091D19B00DC1462 /* WebServiceSDKPart2.m */,
 				792FD43E2091D17A00DC1462 /* Main.storyboard */,
 				792FD4412091D17A00DC1462 /* Assets.xcassets */,
 				792FD4432091D17A00DC1462 /* LaunchScreen.storyboard */,
@@ -206,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				792FD43D2091D17A00DC1462 /* ViewController.m in Sources */,
+				792FD45E2091D19B00DC1462 /* WebServiceSDKPart2.m in Sources */,
 				792FD4482091D17A00DC1462 /* main.m in Sources */,
 				792FD43A2091D17A00DC1462 /* AppDelegate.m in Sources */,
 			);
