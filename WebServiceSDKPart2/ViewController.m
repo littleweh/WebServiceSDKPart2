@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "WebServiceSDKPart2.h"
 
 @interface ViewController ()
 
@@ -17,8 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
     
-    
+    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
     
 }
 
@@ -27,6 +27,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error {
+    NSLog(@"Error: %@", error.localizedDescription);
+}
+
+- (void)WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetImage:(UIImage *)image {
+    NSLog(@"got image");
+}
+
+- (void)WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetJSONObject:(NSDictionary *)rootObject {
+    NSLog(@"got dictionary: %@", rootObject);
+}
+
 
 
 @end

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ASWebServiceSDKPart2.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController <ASWebServiceSDKPart2Delegate>
 
 @end
 
