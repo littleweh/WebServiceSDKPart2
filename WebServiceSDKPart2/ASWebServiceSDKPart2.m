@@ -43,10 +43,10 @@ static NSString *const endPointImagePNG = @"image/png/";
         
         NSError *parseJSONError = nil;
         NSDictionary * rootObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&parseJSONError];
-        if (parseJSONError!=nil) {
-            [self.delegate WebServiceSDKPart2:self didFailedWithError:parseJSONError];
+        if (!parseJSONError) {
+            [self.delegate WebServiceSDKPart2:self didGetJSONObject:rootObject];
         }
-        [self.delegate WebServiceSDKPart2:self didGetJSONObject:rootObject];
+        [self.delegate WebServiceSDKPart2:self didFailedWithError:parseJSONError];
     }];
     
     [dataTask resume];
@@ -54,7 +54,42 @@ static NSString *const endPointImagePNG = @"image/png/";
 }
 
 -(void)postCustomerName:(NSString *)name {
+    NSString *postString = [NSString stringWithFormat:@"%@%@", httpBinDomain, endPointPost];
+    NSURL *postURL = [NSURL URLWithString:postString];
     
+    NSString *postCustomerName = [NSString stringWithFormat:@"custname=%@", name];
+    NSData *postData = [postCustomerName dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:postURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if ([response respondsToSelector:@selector(statusCode)]) {
+            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+            if (statusCode == 500) {
+                return;
+            }
+            // ToDo: response statuscode error handling
+        }
+        
+        if (error != nil) {
+            [self.delegate WebServiceSDKPart2:self didFailedWithError:error];
+        }
+        
+        NSError *parseJSONError = nil;
+        NSDictionary *rootObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&parseJSONError];
+        if (!parseJSONError) {
+            [self.delegate WebServiceSDKPart2:self didGetJSONObject:rootObject];
+        }
+        [self.delegate WebServiceSDKPart2:self didFailedWithError:parseJSONError];
+    }];
+    
+    [dataTask resume];
 }
 
 -(void)fetchImage {

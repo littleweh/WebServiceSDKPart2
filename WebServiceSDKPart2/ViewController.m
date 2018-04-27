@@ -18,7 +18,8 @@
     [super viewDidLoad];
     [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
     
-    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
+//    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
+    [[ASWebServiceSDKPart2 sharedInstance] postCustomerName:@"KKBOX"];
     
 }
 

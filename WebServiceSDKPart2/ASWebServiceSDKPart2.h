@@ -15,7 +15,6 @@
 -(void) WebServiceSDKPart2: (ASWebServiceSDKPart2*) httpBinSDK didGetJSONObject: (NSDictionary *) rootObject;
 -(void) WebServiceSDKPart2: (ASWebServiceSDKPart2*) httpBinSDK didGetImage: (UIImage *) image;
 -(void) WebServiceSDKPart2: (ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error;
-
 @end
 
 @interface ASWebServiceSDKPart2 : NSObject
