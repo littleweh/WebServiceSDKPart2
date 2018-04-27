@@ -27,6 +27,7 @@ static NSString *const endPointImagePNG = @"image/png";
     NSURL *url = [NSURL URLWithString:getURLString];
     
     NSURLSession *session = [NSURLSession sharedSession];
+    
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([response respondsToSelector:@selector(statusCode)]) {
             NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
