@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (strong, nonatomic, readwrite) UIImageView *imageView;
 
 @end
 
@@ -16,10 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    self.imageView.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:self.imageView];
+
     [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
     
 //    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
-    [[ASWebServiceSDKPart2 sharedInstance] postCustomerName:@"KKBOX"];
+//    [[ASWebServiceSDKPart2 sharedInstance] postCustomerName:@"KKBOX"];
+    
+    [[ASWebServiceSDKPart2 sharedInstance] fetchImage];
+
     
 }
 
@@ -34,13 +42,11 @@
 }
 
 - (void)WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetImage:(UIImage *)image {
-    NSLog(@"got image");
+    self.imageView.image = image;
 }
 
 - (void)WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetJSONObject:(NSDictionary *)rootObject {
     NSLog(@"got dictionary: %@", rootObject);
 }
-
-
 
 @end
