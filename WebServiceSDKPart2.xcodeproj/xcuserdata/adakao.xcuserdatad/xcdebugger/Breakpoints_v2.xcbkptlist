@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebServiceSDKPart2/ASWebServiceSDKPart2.m"
-            timestampString = "546768769.64939"
+            timestampString = "546768963.214942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebServiceSDKPart2/ASWebServiceSDKPart2.m"
-            timestampString = "546768769.64965"
+            timestampString = "546768963.2151949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebServiceSDKPart2/ASWebServiceSDKPart2.m"
-            timestampString = "546768769.649717"
+            timestampString = "546768963.21526"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
@@ -74,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebServiceSDKPart2/ASWebServiceSDKPart2.m"
-            timestampString = "546768769.649774"
+            timestampString = "546768963.215315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "185"
             endingLineNumber = "185"
             landmarkName = "-postCustomerName:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WebServiceSDKPart2Tests/WebServiceSDKPart2Tests.m"
-            timestampString = "546768769.64983"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-WebServiceSDKPart2:didGetJSONObject:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

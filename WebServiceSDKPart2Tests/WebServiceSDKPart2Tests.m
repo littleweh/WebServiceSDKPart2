@@ -119,6 +119,41 @@
     XCTAssert([[rootObject objectForKey:@"id"] isKindOfClass:[NSNumber class]], @"object class:%@", [[rootObject objectForKey:@"id"] class]);
 }
 
+-(void)testPostCustomerNameWithPreviousTasks {
+    self.expectation = [self expectationWithDescription:@"post customer name without previous tasks"];
+    ASWebServiceSDKPart2 *sdk3 = [[ASWebServiceSDKPart2 alloc]init];
+    [sdk3 setDelegate:self];
+    
+    NSArray <NSString *> * urlStrings = [NSArray arrayWithObjects:
+                                         [NSString stringWithFormat:@"http://placehold.it/100/8e973b"],
+                                         [NSString stringWithFormat:@"http://placehold.it/200/8e973b"],
+                                         [NSString stringWithFormat:@"http://placehold.it/300/8e973b"],
+                                         [NSString stringWithFormat:@"http://placehold.it/400/8e973b"],
+                                         nil];
+    for (NSString * string in urlStrings) {
+        NSURL *url = [NSURL URLWithString:string];
+        NSURLSessionDataTask *dataTask = [sdk3.session dataTaskWithURL:url];
+        [sdk3.dataTasks addObject:dataTask];
+        [dataTask resume];
+    }
+
+    [sdk3 postCustomerName:@"testWithoutPreviousTasks"];
+    
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+    
+    NSDictionary * rootObject = self.getJSONObject;
+    XCTAssert([rootObject objectForKey:@"custname"] != nil, @"there is no object with key \"custname\"");
+    XCTAssert([rootObject objectForKey:@"id"] != nil, @"there is no object with key \"id\"");
+    
+    XCTAssert([[rootObject objectForKey:@"custname"] isKindOfClass:[NSString class]], @"object class: %@", [[rootObject objectForKey:@"custname"] class]);
+    XCTAssert([[rootObject objectForKey:@"id"] isKindOfClass:[NSNumber class]], @"object class:%@", [[rootObject objectForKey:@"id"] class]);
+}
+
 -(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetJSONObject:(NSDictionary *)rootObject {
     self.getJSONObject = rootObject;
     [self.expectation fulfill];
