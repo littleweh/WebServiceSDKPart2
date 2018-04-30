@@ -64,20 +64,20 @@ static NSString *const endPointImagePNG = @"image/png";
 
     if ([response respondsToSelector:@selector(statusCode)]) {
         NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
-        NSLog(@"%ld", (long)statusCode);
-        // ToDo: response statusCode error handling
-
         switch (statusCode) {
             case 500:
-                NSLog(@"server error");
+                NSLog(@"statuscode: %ld", (long) statusCode);
                 NSLog(@"dataTask state: %ld", (long)dataTask.state);
                 completionHandler(NSURLSessionResponseCancel);
                 return;
                 break;
             case 400 ... 499:
             case 300 ... 399:
+                NSLog(@"statuscode: %ld", (long) statusCode);
+                completionHandler(NSURLSessionResponseCancel);
+                return;
                 break;
-            case 200 ...299:
+            case 200 ... 299:
                 completionHandler(NSURLSessionResponseAllow);
                 break;
             default:
@@ -155,33 +155,6 @@ static NSString *const endPointImagePNG = @"image/png";
     [self.dataTasks addObject:dataTask];
 
     [dataTask resume];
-    
-    
-//    NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        if ([response respondsToSelector:@selector(statusCode)]) {
-//            NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
-//            if (statusCode == 500) return;
-//            else {
-//
-//            }
-//            // ToDo: response statuscode check
-//
-//        }
-//        if (error) {
-//            [self.delegate WebServiceSDKPart2:self didFailedWithError:error];
-//            return;
-//        }
-//
-//        NSError *parseJSONError = nil;
-//        NSDictionary * rootObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&parseJSONError];
-//        if (parseJSONError) {
-//            [self.delegate WebServiceSDKPart2:self didFailedWithError:parseJSONError];
-//        }
-//        [self.delegate WebServiceSDKPart2:self didGetJSONObject:rootObject];
-//
-//    }];
-//    
-//    [dataTask resume];
 }
 
 -(void)postCustomerName:(NSString *)name {
@@ -210,31 +183,6 @@ static NSString *const endPointImagePNG = @"image/png";
     
     [dataTask resume];
     
-//    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        if ([response respondsToSelector:@selector(statusCode)]) {
-//            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-//            if (statusCode == 500) {
-//                return;
-//            }
-//            // ToDo: response statuscode error handling
-//        }
-//
-//        if (error != nil) {
-//            [self.delegate WebServiceSDKPart2:self didFailedWithError:error];
-//            return;
-//        }
-//
-//        NSError *parseJSONError = nil;
-//        NSDictionary *rootObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&parseJSONError];
-//        if (parseJSONError) {
-//            [self.delegate WebServiceSDKPart2:self didFailedWithError:parseJSONError];
-//        }
-//        [self.delegate WebServiceSDKPart2:self didGetJSONObject:rootObject];
-//    }];
-//
-//    dataTask.taskDescription = [NSString stringWithFormat:@"Post customer name to httpBin"];
-//    [self.dataTasks addObject:dataTask];
-//    [dataTask resume];
 }
 
 -(void)fetchImage {
@@ -250,27 +198,6 @@ static NSString *const endPointImagePNG = @"image/png";
     [self cancelPreviousTasks];
     [self.dataTasks addObject:dataTask];
     [dataTask resume];
-    
-//    NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:fetchImageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        if ([response respondsToSelector:@selector(statusCode)]) {
-//            NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
-//            if (statusCode == 500) return;
-//            // ToDo: response statuscode error handling
-//        }
-//        if (error) {
-//            [self.delegate WebServiceSDKPart2:self didFailedWithError:error];
-//            return;
-//        }
-//        UIImage *image = [UIImage imageWithData:data];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.delegate WebServiceSDKPart2:self didGetImage:image];
-//        });
-//
-//    }];
-//
-//    dataTask.taskDescription = [NSString stringWithFormat:@"Get png image file from httpBin"];
-//    [self.dataTasks addObject:dataTask];
-//    [dataTask resume];
     
 }
 @synthesize delegate;

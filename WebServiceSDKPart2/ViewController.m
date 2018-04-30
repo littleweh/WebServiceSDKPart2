@@ -23,11 +23,11 @@
 
     [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
     
-//    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
+    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
 
     [[ASWebServiceSDKPart2 sharedInstance] postCustomerName:@"KKBOX"];
     
-//    [[ASWebServiceSDKPart2 sharedInstance] fetchImage];
+    [[ASWebServiceSDKPart2 sharedInstance] fetchImage];
 
 
 }
