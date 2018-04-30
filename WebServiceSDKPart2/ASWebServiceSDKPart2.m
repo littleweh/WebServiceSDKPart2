@@ -13,6 +13,7 @@ static NSString *const endPointPost = @"post";
 static NSString *const endPointImagePNG = @"image/png";
 
 @implementation ASWebServiceSDKPart2
+#pragma mark - singleton
 +(instancetype) sharedInstance {
     static ASWebServiceSDKPart2 *instance = nil;
     static dispatch_once_t onceToken;
@@ -22,13 +23,24 @@ static NSString *const endPointImagePNG = @"image/png";
     return instance;
 }
 
+#pragma mark - lazy property
+-(NSURLSession *) session {
+    if (!self.session) {
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        self.session = [NSURLSession sessionWithConfiguration: configuration
+                                                     delegate: self
+                                                delegateQueue: [[NSOperationQueue alloc] init]
+                        ];
+    }
+    return self.session;
+}
+
 -(void)fetchGetResponse {
     NSString *getURLString = [NSString stringWithFormat:@"%@%@", httpBinDomain, endPointGet];
     NSURL *url = [NSURL URLWithString:getURLString];
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([response respondsToSelector:@selector(statusCode)]) {
             NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
             if (statusCode == 500) return;
@@ -69,8 +81,7 @@ static NSString *const endPointImagePNG = @"image/png";
     [request setHTTPBody:postData];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([response respondsToSelector:@selector(statusCode)]) {
             NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
             if (statusCode == 500) {
@@ -98,8 +109,7 @@ static NSString *const endPointImagePNG = @"image/png";
     NSString *imageURLString = [NSString stringWithFormat:@"%@%@", httpBinDomain, endPointImagePNG];
     NSURL *fetchImageURL = [NSURL URLWithString:imageURLString];
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:fetchImageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:fetchImageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([response respondsToSelector:@selector(statusCode)]) {
             NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
             if (statusCode == 500) return;

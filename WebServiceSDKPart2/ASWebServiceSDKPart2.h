@@ -17,8 +17,10 @@
 -(void) WebServiceSDKPart2: (ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error;
 @end
 
-@interface ASWebServiceSDKPart2 : NSObject
+@interface ASWebServiceSDKPart2 : NSObject<NSURLSessionDelegate>
 @property (weak, nonatomic) id <ASWebServiceSDKPart2Delegate> delegate;
+@property (strong, nonatomic) NSURLSession *session;
+@property (strong, nonatomic) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
 +(instancetype)sharedInstance;
 -(void)fetchGetResponse;
 -(void)postCustomerName:(NSString *)name;
