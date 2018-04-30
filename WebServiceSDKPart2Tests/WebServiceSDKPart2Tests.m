@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSDictionary * getJSONObject;
 @property (strong, nonatomic) XCTestExpectation *expectation;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSError *error;
 
 @end
 
@@ -188,12 +189,48 @@
     XCTAssert([self.image isKindOfClass:[UIImage class]], @"image type is: %@", [self.image class]);
 }
 
+-(void)testCancelPreviousTask {
+    self.expectation = [self expectationWithDescription:@"testPreviousTasksCancel"];
+    ASWebServiceSDKPart2 *sdk4 = [[ASWebServiceSDKPart2 alloc]init];
+    [sdk4 setDelegate:self];
+    
+    XCTAssert(sdk4.dataTasks.count == 0, @"before method calling, previous Tasks is not nil");
+    
+    [sdk4 fetchImage];
+    [sdk4 postCustomerName:@"1234"];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+    
+    XCTAssert(sdk4.dataTasks.count ==2, @"After method calling, # of tasks should be 2");
+    
+    XCTAssert(self.error != nil, @"error doesn't exist");
+    
+    NSString *failedURLString = [[self.error userInfo] objectForKey:@"NSErrorFailingURLStringKey"];
+    
+    XCTAssert([failedURLString isEqualToString:@"http://placehold.it/300/d32776"], @"fetchImage url should fail");
+    XCTAssert(self.image == nil, @"fetchimage should fail");
+    
+    NSDictionary * rootObject = self.getJSONObject;
+    XCTAssert([rootObject objectForKey:@"custname"] != nil, @"there is no object with key \"custname\"");
+    XCTAssert([rootObject objectForKey:@"id"] != nil, @"there is no object with key \"id\"");
+    
+    XCTAssert([[rootObject objectForKey:@"custname"] isKindOfClass:[NSString class]], @"object class: %@", [[rootObject objectForKey:@"custname"] class]);
+    XCTAssert([[rootObject objectForKey:@"id"] isKindOfClass:[NSNumber class]], @"object class:%@", [[rootObject objectForKey:@"id"] class]);
+    
+}
+
 -(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetJSONObject:(NSDictionary *)rootObject {
     self.getJSONObject = rootObject;
+    NSLog(@"%@", rootObject);
     [self.expectation fulfill];
 }
 
 -(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error {
+    self.error = error;
     NSLog(@"Error: %@", error.localizedDescription);
 }
 
