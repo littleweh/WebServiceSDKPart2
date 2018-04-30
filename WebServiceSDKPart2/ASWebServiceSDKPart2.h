@@ -17,7 +17,7 @@
 -(void) WebServiceSDKPart2: (ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error;
 @end
 
-@interface ASWebServiceSDKPart2 : NSObject<NSURLSessionDelegate>
+@interface ASWebServiceSDKPart2 : NSObject<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 @property (weak, nonatomic) id <ASWebServiceSDKPart2Delegate> delegate;
 @property (strong, nonatomic) NSURLSession *session;
 @property (strong, nonatomic) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
