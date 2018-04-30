@@ -14,10 +14,14 @@ static NSString *const endPointImagePNG = @"image/png";
 
 @interface ASWebServiceSDKPart2 ()
 @property (strong, nonatomic) NSMutableData * buffer;
+@property (strong, nonatomic) NSURLSession *session;
+@property (strong, nonatomic) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
 @end
 
 @implementation ASWebServiceSDKPart2
+
 #pragma mark - singleton
+
 +(instancetype) sharedInstance {
     static ASWebServiceSDKPart2 *instance = nil;
     static dispatch_once_t onceToken;
@@ -28,6 +32,7 @@ static NSString *const endPointImagePNG = @"image/png";
 }
 
 #pragma mark - lazy property
+
 -(NSURLSession *) session {
     if (!_session) {
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -55,6 +60,8 @@ static NSString *const endPointImagePNG = @"image/png";
     }
     return _dataTasks;
 }
+
+#pragma mark - NSURLSessionDataDelegate methods
 
 -(void) URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     NSLog(@"task identifier: %lu", (unsigned long)dataTask.taskIdentifier);
@@ -126,7 +133,7 @@ static NSString *const endPointImagePNG = @"image/png";
 
 #pragma mark - get, post, fetch image method
 
--(void) cancelPreviousTasks {
+-(void) cancelExistedTasks {
     for (NSURLSessionDataTask *task in self.dataTasks) {
         switch (task.state) {
             case 0:
@@ -144,14 +151,14 @@ static NSString *const endPointImagePNG = @"image/png";
 //    NSString *getURLString = [NSString stringWithFormat:@"%@%@", httpBinDomain, endPointGet];
     
     // since the httpbin connection is not stable, use jsonplaceholder to test
-    NSString *getURLString = [NSString stringWithFormat:@"https://jsonplaceholder.typicode.com/comments"];
+    NSString *getURLString = [NSString stringWithFormat:@"https://jsonplaceholder.typicode.com/posts/1"];
 
     NSURL *url = [NSURL URLWithString:getURLString];
     
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:url];
     dataTask.taskDescription = [NSString stringWithFormat:@"Get from httpBin"];
     
-    [self cancelPreviousTasks];
+    [self cancelExistedTasks];
     [self.dataTasks addObject:dataTask];
 
     [dataTask resume];
@@ -178,7 +185,7 @@ static NSString *const endPointImagePNG = @"image/png";
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
     dataTask.taskDescription = @"Post customer name to httpbin";
     
-    [self cancelPreviousTasks];
+    [self cancelExistedTasks];
     [self.dataTasks addObject:dataTask];
     
     [dataTask resume];
@@ -193,9 +200,9 @@ static NSString *const endPointImagePNG = @"image/png";
     NSURL *fetchImageURL = [NSURL URLWithString:imageURLString];
     
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:fetchImageURL];
-    dataTask.taskDescription = [NSString stringWithFormat:@"get png image file form httpBin"];
+    dataTask.taskDescription = [NSString stringWithFormat:@"Get png image file form httpBin"];
     
-    [self cancelPreviousTasks];
+    [self cancelExistedTasks];
     [self.dataTasks addObject:dataTask];
     [dataTask resume];
     

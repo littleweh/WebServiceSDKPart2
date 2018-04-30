@@ -19,9 +19,10 @@
 
 @interface ASWebServiceSDKPart2 : NSObject<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 @property (weak, nonatomic) id <ASWebServiceSDKPart2Delegate> delegate;
-@property (strong, nonatomic) NSURLSession *session;
-@property (strong, nonatomic) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
+@property (strong, nonatomic, readonly) NSURLSession *session;
+@property (strong, nonatomic, readonly) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
 +(instancetype)sharedInstance;
+-(void) cancelExistedTasks;
 -(void)fetchGetResponse;
 -(void)postCustomerName:(NSString *)name;
 -(void)fetchImage;
