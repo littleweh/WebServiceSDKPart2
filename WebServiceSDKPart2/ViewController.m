@@ -21,7 +21,7 @@
     self.imageView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.imageView];
 
-    [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
+//    [[ASWebServiceSDKPart2 sharedInstance] setDelegate:self];
 //
 //    [[ASWebServiceSDKPart2 sharedInstance] fetchGetResponse];
 

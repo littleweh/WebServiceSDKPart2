@@ -12,6 +12,7 @@
 @interface WebServiceSDKPart2Tests : XCTestCase<ASWebServiceSDKPart2Delegate>
 @property (strong, nonatomic) NSDictionary * getJSONObject;
 @property (strong, nonatomic) XCTestExpectation *expectation;
+@property (strong, nonatomic) UIImage *image;
 
 @end
 
@@ -120,7 +121,7 @@
 }
 
 -(void)testPostCustomerNameWithPreviousTasks {
-    self.expectation = [self expectationWithDescription:@"post customer name without previous tasks"];
+    self.expectation = [self expectationWithDescription:@"post customer name with previous tasks"];
     ASWebServiceSDKPart2 *sdk3 = [[ASWebServiceSDKPart2 alloc]init];
     [sdk3 setDelegate:self];
     
@@ -154,6 +155,39 @@
     XCTAssert([[rootObject objectForKey:@"id"] isKindOfClass:[NSNumber class]], @"object class:%@", [[rootObject objectForKey:@"id"] class]);
 }
 
+-(void) testFetchImageWithoutPreviousTasks {
+    
+    self.expectation = [self expectationWithDescription:@"get image without previous tasks"];
+    ASWebServiceSDKPart2 *sdkSingleton = [ASWebServiceSDKPart2 sharedInstance];
+    [sdkSingleton setDelegate: self];
+    
+    [sdkSingleton fetchImage];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+    
+    XCTAssert(self.image != nil, @"image file doesn't exist");
+    XCTAssert([self.image isKindOfClass:[UIImage class]], @"image type is: %@", [self.image class]);
+}
+
+-(void) testFetchImageWithPreviousCompletedTasks {
+    self.expectation = [self expectationWithDescription:@"get image with previous tasks"];
+    ASWebServiceSDKPart2 *sdkSingleton = [ASWebServiceSDKPart2 sharedInstance];
+    [sdkSingleton setDelegate:self];
+    
+    [sdkSingleton fetchImage];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+    
+    XCTAssert(self.image != nil, @"image file doesn't exist");
+    XCTAssert([self.image isKindOfClass:[UIImage class]], @"image type is: %@", [self.image class]);
+}
+
 -(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetJSONObject:(NSDictionary *)rootObject {
     self.getJSONObject = rootObject;
     [self.expectation fulfill];
@@ -161,6 +195,11 @@
 
 -(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didFailedWithError:(NSError *)error {
     NSLog(@"Error: %@", error.localizedDescription);
+}
+
+-(void) WebServiceSDKPart2:(ASWebServiceSDKPart2 *)httpBinSDK didGetImage:(UIImage *)image {
+    self.image = image;
+    [self.expectation fulfill];
 }
 
 
