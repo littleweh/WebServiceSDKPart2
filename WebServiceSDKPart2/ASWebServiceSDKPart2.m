@@ -9,7 +9,7 @@
 #import "ASWebServiceSDKPart2.h"
 @interface ASWebServiceSDKPart2 ()
 @property (strong, nonatomic) NSMutableData * buffer;
-@property (strong, nonatomic) NSURLSession *session;
+@property (strong, nonatomic) NSURLSession * session;
 @property (strong, nonatomic) NSMutableArray <NSURLSessionDataTask *> * dataTasks;
 @end
 
